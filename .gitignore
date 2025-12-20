@@ -25,6 +25,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 
+compose.override.yaml
 compose.override.yml
 
 # Uploads
