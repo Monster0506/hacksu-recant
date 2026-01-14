@@ -1,14 +1,14 @@
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
-import { adminSessions, location, leadership, meetings, redirects, notes, information, lessonIcons } from '$lib/server/db/schema';
+import { adminSessions, location, leadership, meetings, redirects, notes, information, lessonIcons, uploadedFiles } from '$lib/server/db/schema';
 import { requireAdmin } from '$lib/server/admin';
 
 export const GET: RequestHandler = async (event) => {
 	await requireAdmin(event);
 
 	// Fetch everything we care about for backup/export
-	const [adminSessionsList, locationList, leadershipList, meetingsList, redirectsList, notesList, informationList, lessonIconsList] =
+	const [adminSessionsList, locationList, leadershipList, meetingsList, redirectsList, notesList, informationList, lessonIconsList, uploadedFilesList] =
 		await Promise.all([
 			// admin sessions (you may want to omit in some contexts, but exporting for now)
 			db.select().from(adminSessions),
@@ -25,7 +25,9 @@ export const GET: RequestHandler = async (event) => {
 			// helpful information blocks
 			db.select().from(information),
 			// lesson icon mappings
-			db.select().from(lessonIcons)
+			db.select().from(lessonIcons),
+			// uploaded files (metadata only; binaries are handled by /admin/api/dump/assets)
+			db.select().from(uploadedFiles)
 		]);
 
 	return json({
@@ -38,7 +40,8 @@ export const GET: RequestHandler = async (event) => {
 		redirects: redirectsList,
 		notes: notesList,
 		information: informationList,
-		lessonIcons: lessonIconsList
+		lessonIcons: lessonIconsList,
+		uploadedFiles: uploadedFilesList
 	});
 };
 
@@ -56,7 +59,8 @@ export const POST: RequestHandler = async (event) => {
 		redirects: redirectsList = [],
 		notes: notesList = [],
 		information: informationList = [],
-		lessonIcons: lessonIconsList = []
+		lessonIcons: lessonIconsList = [],
+		uploadedFiles: uploadedFilesList = []
 	} = body ?? {};
 
 	// Naive restore strategy:
@@ -74,6 +78,7 @@ export const POST: RequestHandler = async (event) => {
 	await db.delete(notes);
 	await db.delete(information);
 	await db.delete(lessonIcons);
+	await db.delete(uploadedFiles);
 
 	// Helper to parse ISO timestamp fields into Date instances
 	const parseDate = (value: unknown): Date | null => {
@@ -150,6 +155,14 @@ export const POST: RequestHandler = async (event) => {
 		}));
 		await db.insert(lessonIcons).values(rows);
 	}
+	if (Array.isArray(uploadedFilesList) && uploadedFilesList.length > 0) {
+		const rows = uploadedFilesList.map((row: any) => ({
+			...row,
+			createdAt: parseDate(row.createdAt),
+			deletedAt: parseDate(row.deletedAt)
+		}));
+		await db.insert(uploadedFiles).values(rows);
+	}
 
 	return json({
 		ok: true,
@@ -162,7 +175,8 @@ export const POST: RequestHandler = async (event) => {
 			redirects: redirectsList.length ?? 0,
 			notes: notesList.length ?? 0,
 			information: informationList.length ?? 0,
-			lessonIcons: lessonIconsList.length ?? 0
+			lessonIcons: lessonIconsList.length ?? 0,
+			uploadedFiles: uploadedFilesList.length ?? 0
 		}
 	});
 };

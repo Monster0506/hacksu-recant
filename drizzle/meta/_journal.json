@@ -141,6 +141,20 @@
       "when": 1768495837007,
       "tag": "0019_tough_frightful_four",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1773747201540,
+      "tag": "0020_round_wild_child",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1775053089390,
+      "tag": "0021_boring_shinobi_shaw",
+      "breakpoints": true
     }
   ]
 }
