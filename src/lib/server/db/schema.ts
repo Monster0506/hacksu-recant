@@ -92,3 +92,16 @@ export const lessonIcons = pgTable('lesson_icons', {
 	updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull()
 });
 
+// Course schedule table — populated by the schedule-service scraper
+export const courseSchedule = pgTable('course_schedule', {
+	id: text('id').primaryKey(),
+	code: text('code').notNull(),
+	name: text('name').notNull(),
+	day: text('day'),
+	time: text('time'),
+	lecturer: text('lecturer'),
+	location: text('location'),
+	email: text('email'),
+	scrapedAt: timestamp('scraped_at', { withTimezone: true }).notNull()
+});
+
