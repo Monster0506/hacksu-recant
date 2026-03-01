@@ -36,6 +36,16 @@
 			title: 'Lesson Icons',
 			href: '/admin/lesson-icons',
 			description: 'Manage icon mappings for lesson categories'
+		},
+		{
+			title: 'Course Schedule',
+			href: '/admin/schedule',
+			description: 'View the current CS course schedule with lecturer emails'
+		},
+		{
+			title: 'Audit Log',
+			href: '/admin/audit-log',
+			description: 'View all admin actions and changes'
 		}
 	];
 </script>

@@ -5,6 +5,7 @@ import { pgTable, text, timestamp, boolean, integer } from 'drizzle-orm/pg-core'
 export const adminSessions = pgTable('admin_sessions', {
 	id: text('id').primaryKey(),
 	discordUserId: text('discord_user_id').notNull(),
+	discordUsername: text('discord_username'), // Discord username for display
 	isAdmin: boolean('is_admin').notNull().default(true),
 	createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 	expiresAt: timestamp('expires_at', { withTimezone: true }).notNull()
@@ -31,7 +32,8 @@ export const leadership = pgTable('leadership', {
 	github: text('github'), 
 	photo: text('photo'), 
 	titles: text('titles').array().notNull(),
-	link: text('link'), 
+	link: text('link'),
+	sortOrder: integer('sort_order').default(9999),
 	isCurrent: boolean('is_current').notNull().default(false)
 });
 
@@ -47,7 +49,7 @@ export const meetings = pgTable('meetings', {
 });
 
 // Redirects table
-// Supports short links like /redir/abc -> https://google.com
+// Supports short links like /r/abc -> https://google.com
 export const redirects = pgTable('redirects', {
 	slug: text('slug').primaryKey(),
 	targetUrl: text('target_url').notNull(),
@@ -90,5 +92,34 @@ export const lessonIcons = pgTable('lesson_icons', {
 	iconifyId: text('iconify_id').notNull(),
 	createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 	updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull()
+});
+
+// Admin audit log table - tracks all admin actions
+export const adminAuditLog = pgTable('admin_audit_log', {
+	id: text('id').primaryKey(),
+	adminUserId: text('admin_user_id').notNull(), // Discord user ID
+	adminUsername: text('admin_username'), // Discord username (stored for display)
+	action: text('action').notNull(), // CREATE, UPDATE, DELETE
+	resourceType: text('resource_type').notNull(), // information, leadership, meetings, etc.
+	resourceId: text('resource_id'), // ID of the resource (can be null for some actions)
+	routePath: text('route_path').notNull(), // The route where action occurred
+	changesBefore: text('changes_before'), // JSON string of old values
+	changesAfter: text('changes_after'), // JSON string of new values
+	ipAddress: text('ip_address'),
+	userAgent: text('user_agent'),
+	createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull()
+});
+
+// Course schedule table — populated by the schedule-service scraper
+export const courseSchedule = pgTable('course_schedule', {
+	id: text('id').primaryKey(),
+	code: text('code').notNull(),
+	name: text('name').notNull(),
+	day: text('day'),
+	time: text('time'),
+	lecturer: text('lecturer'),
+	location: text('location'),
+	email: text('email'),
+	scrapedAt: timestamp('scraped_at', { withTimezone: true }).notNull()
 });
 
