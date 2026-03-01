@@ -110,8 +110,43 @@
     {
       "idx": 15,
       "version": "7",
+      "when": 1766206280933,
+      "tag": "0015_burly_mindworm",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1766206825744,
+      "tag": "0016_late_liz_osborn",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1768426201850,
+      "tag": "0017_tiny_sister_grimm",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1768426400631,
+      "tag": "0018_slow_mindworm",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1768495837007,
+      "tag": "0019_tough_frightful_four",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
       "when": 1772330279963,
-      "tag": "0015_dizzy_spiral",
+      "tag": "0020_dizzy_spiral",
       "breakpoints": true
     }
   ]

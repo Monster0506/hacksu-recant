@@ -4,8 +4,9 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
 	const allLeaders = await db.query.leadership.findMany({
-		orderBy: (leadership, { desc, asc }) => [
+		orderBy: (leadership, { desc, asc}) => [
 			desc(leadership.isCurrent),
+			asc(leadership.sortOrder),
 			desc(leadership.gradYear),
 			asc(leadership.gradTerm)
 		]

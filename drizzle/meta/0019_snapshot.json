@@ -1,6 +1,6 @@
 {
-  "id": "afe2435f-2c55-4f44-9fcf-1bdd7e35fb8c",
-  "prevId": "a51df9aa-1b3f-44da-bc7a-43defebd6c27",
+  "id": "d153e729-e601-4973-8fcb-74f709709731",
+  "prevId": "3f778cb0-5964-403b-9ecc-7d549a7550ab",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -19,6 +19,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "admin_username": {
+          "name": "admin_username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "action": {
           "name": "action",
@@ -99,6 +105,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "discord_username": {
+          "name": "discord_username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "is_admin": {
           "name": "is_admin",
@@ -251,6 +263,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 9999
         },
         "is_current": {
           "name": "is_current",

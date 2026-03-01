@@ -1,6 +1,6 @@
 {
-  "id": "afe2435f-2c55-4f44-9fcf-1bdd7e35fb8c",
-  "prevId": "a51df9aa-1b3f-44da-bc7a-43defebd6c27",
+  "id": "2f77564f-89e5-473f-b9d2-c4bbc295f80b",
+  "prevId": "afe2435f-2c55-4f44-9fcf-1bdd7e35fb8c",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -19,6 +19,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "admin_username": {
+          "name": "admin_username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "action": {
           "name": "action",
@@ -99,6 +105,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "discord_username": {
+          "name": "discord_username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "is_admin": {
           "name": "is_admin",
