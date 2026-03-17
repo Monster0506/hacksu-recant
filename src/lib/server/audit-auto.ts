@@ -23,7 +23,8 @@ type ResourceType =
 	| 'redirects'
 	| 'location'
 	| 'lesson-icons'
-	| 'uploaded-files';
+	| 'uploaded-files'
+	| 'email';
 
 type AuditAction = 'CREATE' | 'UPDATE' | 'DELETE';
 
